@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beb... Important Question 💌</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #fff0f5;
+      margin: 0;
+      padding: 40px 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow-x: hidden;
+    }
+
+    .card {
+      background: white;
+      padding: 42px 35px;
+      border-radius: 22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      max-width: 560px;
+      width: 92%;
+      position: relative;
+      z-index: 5;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 14px;
+    }
+
+    /* Images */
+    .mainImage {
+      width: 100%;
+      max-width: 420px;
+      border-radius: 18px;
+      margin: 14px auto 18px;
+      display: block;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+      border: 4px solid #ffe1ea;
+      transform: scale(1);
+    }
+
+    .caption {
+      font-size: 0.95rem;
+      color: #666;
+      margin-top: -10px;
+      margin-bottom: 22px;
+    }
+
+    .buttons {
+      position: relative;
+      display: inline-flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    button {
+      font-size: 1.15rem;
+      padding: 12px 26px;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform 0.18s ease;
+      user-select: none;
+    }
+
+    #yesBtn {
+      background: #ff4d6d;
+      color: white;
+      transform: scale(1);
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.05);
+    }
+
+    #noBtn {
+      background: #e6e6e6;
+      color: #444;
+      position: relative;
+      transform: scale(1);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #success {
+      font-size: 1.35rem;
+      color: #ff2d55;
+      margin-top: 18px;
+      line-height: 1.45;
+    }
+
+    .tiny {
+      font-size: 0.95rem;
+      color: #666;
+      margin-top: 18px;
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: fixed;
+      bottom: -40px;
+      font-size: 22px;
+      animation: floatUp linear forwards;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.9;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 0.9;
+      }
+      to {
+        transform: translateY(-110vh) scale(1.4);
+        opacity: 0;
+      }
+    }
+
+    /* Cute bounce animation for success photo */
+    .bouncePop {
+      animation: bouncePop 0.7s ease forwards;
+    }
+
+    @keyframes bouncePop {
+      0%   { transform: scale(0.6); }
+      55%  { transform: scale(1.08); }
+      75%  { transform: scale(0.96); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1>💌 Beb... I have a question</h1>
+    <p>Will you be my Valentine? 🥺💖</p>
+
+    <!-- MAIN SCREEN IMAGE -->
+    <img
+      class="mainImage"
+      src="pig-band.png"
+      alt="Cute pig band"
+    />
+    <div class="caption">🎸 our love is a headliner tbh</div>
+
+    <div id="buttons" class="buttons">
+      <button id="yesBtn">Yes 💘</button>
+      <button id="noBtn">No 🙄</button>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="success" class="hidden">
+      🎉 YAYYYYYY BEB!!! 🎉<br>
+      You just made me the happiest person ever 🥹💖<br><br>
+
+      <img
+        id="successPhoto"
+        class="mainImage"
+        src="mcgriddle-cheers.jpg"
+        alt="Us cheersing McGriddles"
+      />
+
+      <div class="caption">🥹🍔 Valentine breakfast secured</div>
+
+      💘 Valentine status: CONFIRMED 💘
+      <div class="tiny">(I knew you’d say yes 😌)</div>
+    </div>
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const success = document.getElementById("success");
+    const buttons = document.getElementById("buttons");
+    const successPhoto = document.getElementById("successPhoto");
+
+    let yesScale = 1;
+    let noScale = 1;
+
+    function playYaySound() {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      const ctx = new AudioContext();
+
+      const o1 = ctx.createOscillator();
+      const o2 = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      o1.type = "sine";
+      o2.type = "triangle";
+
+      o1.frequency.value = 440;
+      o2.frequency.value = 660;
+
+      gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.25, ctx.currentTime + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.35);
+
+      o1.frequency.exponentialRampToValueAtTime(740, ctx.currentTime + 0.18);
+      o2.frequency.exponentialRampToValueAtTime(980, ctx.currentTime + 0.18);
+
+      o1.connect(gain);
+      o2.connect(gain);
+      gain.connect(ctx.destination);
+
+      o1.start();
+      o2.start();
+
+      o1.stop(ctx.currentTime + 0.38);
+      o2.stop(ctx.currentTime + 0.38);
+    }
+
+    // Floating hearts generator
+    let heartsInterval;
+
+    function startHearts() {
+      if (heartsInterval) return;
+
+      heartsInterval = setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+
+        const hearts = ["💖", "💘", "💝", "💕", "💗", "❤️"];
+        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+
+        heart.style.left = Math.random() * 100 + "vw";
+
+        const size = 18 + Math.random() * 22;
+        heart.style.fontSize = size + "px";
+
+        const duration = 3 + Math.random() * 2.5;
+        heart.style.animationDuration = duration + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, duration * 1000);
+      }, 180);
+    }
+
+    yesBtn.addEventListener("click", () => {
+      playYaySound();
+
+      buttons.classList.add("hidden");
+      success.classList.remove("hidden");
+
+      document.body.style.background = "#ffe6ee";
+
+      startHearts();
+
+      // Bounce-pop the success photo
+      successPhoto.classList.remove("bouncePop"); // reset if needed
+      void successPhoto.offsetWidth; // force reflow so animation re-triggers
+      successPhoto.classList.add("bouncePop");
+
+      // Smooth scroll down a bit so the success feels "revealed"
+      setTimeout(() => {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+      }, 150);
+    });
+
+    function bullyNoButton() {
+      const x = Math.floor(Math.random() * 260) - 130;
+      const y = Math.floor(Math.random() * 200) - 100;
+      noBtn.style.transform = `translate(${x}px, ${y}px) scale(${noScale})`;
+
+      yesScale += 0.12;
+      yesBtn.style.transform = `scale(${yesScale})`;
+
+      noScale -= 0.08;
+      if (noScale < 0.25) noScale = 0.25;
+    }
+
+    noBtn.addEventListener("mouseenter", bullyNoButton);
+
+    noBtn.addEventListener("click", () => {
+      alert("No is not available at this time. Please select YES. 💖");
+      bullyNoButton();
+    });
+  </script>
+</body>
+</html>
